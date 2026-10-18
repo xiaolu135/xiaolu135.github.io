@@ -235,56 +235,73 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
   .chinese-name { font-size: 1.5rem !important; margin-top: 5px !important; }
   .hero-tagline { font-size: 1.1rem !important; margin-top: 10px !important; font-weight: normal !important; }
 
-  /* ================= 修复3：技能云彻底居中（终极暴力版） ================= */
+  /* ================= 终极暴力重写：技能云 ================= */
+  
+  /* 1. 把外层容器变成普通排队 */
+  .honor-layout { display: block !important; } /* 取消双列 */
+  
   .skill-cloud {
     display: flex !important;
-    flex-direction: column !important; 
-    align-items: center !important; /* 强制子元素水平居中 */
-    justify-content: center !important;
-    gap: 12px !important; 
-    height: auto !important; 
-    min-height: 300px !important; 
-    padding: 40px 0 !important;
-    width: 100% !important;
-    position: relative !important; 
-    background: transparent !important; 
-  }
-
-  /* 禁用一切绝对定位，并限制宽度 */
-  .skill-cloud span, .skill-cloud button {
-    position: static !important; 
-    transform: none !important; 
-    left: 0 !important; 
-    top: 0 !important;
-    margin: 0 auto !important; /* 水平居中 */
-    width: 85% !important; 
-    max-width: 300px !important;
-    display: flex !important;
-    justify-content: center !important;
-    box-sizing: border-box !important;
-  }
-
-  /* 专门针对蓝色按钮 */
-  .skill-cloud .skill-main {
-    margin: 15px auto !important;
-    padding: 20px !important;
-    height: auto !important;
     flex-direction: column !important;
-    text-align: center !important;
-    white-space: normal !important; /* 强制允许文字换行，不再被撑宽 */
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+    min-height: 300px !important;
+    height: auto !important;
+    padding: 30px 0 !important;
+    margin: 0 auto !important;
+    background: transparent !important;
+    position: relative !important;
+    /* 防止被溢出内容撑大 */
+    overflow: hidden !important; 
+  }
+
+  /* 2. 把里面所有的东西（标签和按钮）全部变成普通块，取消一切绝对定位 */
+  .skill-cloud > span,
+  .skill-cloud > button.skill-main {
+    position: relative !important; 
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 85% !important;
+    max-width: 320px !important;
+    margin: 0 auto !important; /* 强制居中 */
+    padding: 10px 20px !important;
+    border-radius: 999px !important;
+    box-sizing: border-box !important;
+    /* 最关键的一句：允许换行，防止被长文本撑宽 */
+    white-space: normal !important; 
+    word-wrap: break-word !important;
+  }
+
+  /* 3. 专门针对蓝色按钮的样式 */
+  .skill-cloud > button.skill-main {
+    padding: 20px !important;
+    margin: 15px auto !important; /* 上下多留点空间 */
+    border-radius: 20px !important; /* 大按钮用圆角矩形更好看 */
     background: var(--blue-deep) !important;
+  }
+
+  .skill-main .view-hint {
+    font-size: 0.8rem !important;
+    margin-top: 5px !important;
+    color: rgba(255,255,255,0.7) !important;
   }
 
   /* 其他通用区块 */
   .section-block { padding-block: 60px; }
   .section-heading { grid-template-columns: 1fr; gap: 4px; margin-bottom: 34px; }
-  .about-layout, .project-grid, .honor-layout, .interest-layout { grid-template-columns: 1fr !important; }
+  .about-layout, .project-grid, .interest-layout { grid-template-columns: 1fr !important; }
   .project-card.feature { transform: none; }
   .timeline::before { left: 6px; }
   .timeline-item { grid-template-columns: 1fr; gap: 12px; padding-left: 34px; }
   .timeline-item::before { left: 0; top: 15px; }
   .time { padding-top: 0; }
-  .honor-layout, .interest-layout { gap: 40px; }
   .interest-visual { min-height: 400px; }
   .footer-inner { grid-template-columns: 1fr; gap: 25px; align-items: start; }
   footer small { width: 100%; flex-wrap: wrap; }
