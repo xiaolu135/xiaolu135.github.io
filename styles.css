@@ -194,7 +194,7 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
   .hero-actions { justify-content: center; flex-wrap: wrap; gap: 15px; }
   .scroll-cue { display: none; }
 
-  /* ================= 修复1：副标题彻底抛弃电脑端横线 ================= */
+  /* 修复1：副标题 */
   .portrait-wrap p {
     display: flex !important;
     flex-direction: column !important;
@@ -202,29 +202,18 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
     text-align: center !important;
     width: 100% !important;
     margin-top: 20px !important;
-    padding-left: 0 !important; /* 干掉电脑端的左内边距 */
+    padding-left: 0 !important;
     font-size: 1rem !important;
     line-height: 1.6 !important;
   }
-  
-  /* 干掉电脑端那条霸道的横线 */
-  .portrait-wrap > p::before {
-    display: none !important; 
-  }
-
+  .portrait-wrap > p::before { display: none !important; }
   .portrait-wrap p > span:first-child {
     font-size: 1.2rem !important;
     font-weight: 700 !important;
     color: var(--blue-deep) !important;
     margin-bottom: 5px !important;
   }
-
-  /* 隐藏圆点和换行符，纯靠 flex 布局控制 */
-  .portrait-wrap p .mid-dot,
-  .portrait-wrap p .mobile-br {
-    display: none !important; 
-  }
-
+  .portrait-wrap p .mid-dot, .portrait-wrap p .mobile-br { display: none !important; }
   .portrait-wrap p .sub-chapter {
     display: block !important;
     width: 100% !important; 
@@ -233,12 +222,7 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
     color: var(--ink-soft) !important;
   }
 
-  /* 在手机端，让普通文本变成块级，独占一行（替代 <br>） */
-  .portrait-wrap p {
-    gap: 4px !important;
-  }
-
-  /* ================= 修复2：首屏超大字 ================= */
+  /* 修复2：首屏超大字 */
   h1 { 
     font-size: clamp(2.2rem, 8vw, 3rem) !important; 
     line-height: 1.2 !important;
@@ -248,21 +232,14 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
     gap: 10px;
     word-break: keep-all !important;
   }
-  .chinese-name {
-    font-size: 1.5rem !important;
-    margin-top: 5px !important;
-  }
-  .hero-tagline {
-    font-size: 1.1rem !important;
-    margin-top: 10px !important;
-    font-weight: normal !important;
-  }
+  .chinese-name { font-size: 1.5rem !important; margin-top: 5px !important; }
+  .hero-tagline { font-size: 1.1rem !important; margin-top: 10px !important; font-weight: normal !important; }
 
-  /* ================= 修复3：技能云彻底居中 ================= */
+  /* ================= 修复3：技能云彻底居中（终极暴力版） ================= */
   .skill-cloud {
     display: flex !important;
     flex-direction: column !important; 
-    align-items: center !important;
+    align-items: center !important; /* 强制子元素水平居中 */
     justify-content: center !important;
     gap: 12px !important; 
     height: auto !important; 
@@ -270,46 +247,32 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
     padding: 40px 0 !important;
     width: 100% !important;
     position: relative !important; 
-    transform: none !important;
-    scale: 1 !important; 
-    background: transparent !important; /* 去掉电脑端的径向渐变背景，防止看着像圆圈 */
+    background: transparent !important; 
   }
 
-  /* 针对所有的小标签 (CET-6, Python等) 暴力重置 */
-  .skill-cloud span {
+  /* 禁用一切绝对定位，并限制宽度 */
+  .skill-cloud span, .skill-cloud button {
     position: static !important; 
     transform: none !important; 
-    left: auto !important; right: auto !important; top: auto !important; bottom: auto !important;
-    margin: 0 auto !important;
+    left: 0 !important; 
+    top: 0 !important;
+    margin: 0 auto !important; /* 水平居中 */
     width: 85% !important; 
-    max-width: 320px !important;
-    font-size: 1rem !important;
+    max-width: 300px !important;
     display: flex !important;
     justify-content: center !important;
+    box-sizing: border-box !important;
   }
 
-  /* 针对蓝色大按钮，强制占据父容器并居中 */
+  /* 专门针对蓝色按钮 */
   .skill-cloud .skill-main {
-    position: static !important; 
-    transform: none !important; 
-    left: auto !important; right: auto !important; top: auto !important; bottom: auto !important;
-    margin: 15px auto !important; 
-    width: 85% !important; 
-    max-width: 320px !important;
-    height: auto !important;
+    margin: 15px auto !important;
     padding: 20px !important;
-    display: flex !important;
+    height: auto !important;
     flex-direction: column !important;
-    align-items: center !important;
     text-align: center !important;
-    white-space: normal !important; 
-    background: var(--blue-deep) !important; /* 确保背景是蓝色的 */
-  }
-
-  .skill-main .view-hint {
-    font-size: 0.85rem !important;
-    margin-top: 5px !important;
-    display: block !important;
+    white-space: normal !important; /* 强制允许文字换行，不再被撑宽 */
+    background: var(--blue-deep) !important;
   }
 
   /* 其他通用区块 */
