@@ -167,7 +167,7 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
   display: none !important;
 }
 
-/* 2. 电脑端的减少动画偏好（你原本就有的，保留） */
+/* 2. 电脑端的减少动画偏好 */
 @media (prefers-reduced-motion: reduce) { 
   html { scroll-behavior: auto; } 
   .wind, .scroll-cue span { animation: none; } 
@@ -175,7 +175,7 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
 }
 
 /* ========================================================= */
-/* 3. 手机端专项适配（最终完美版） */
+/* 3. 手机端专项适配（终极无死角覆盖版） */
 /* ========================================================= */
 @media (max-width: 820px) {
   /* 基础排版 */
@@ -194,39 +194,48 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
   .hero-actions { justify-content: center; flex-wrap: wrap; gap: 15px; }
   .scroll-cue { display: none; }
 
-  /* ================= 修复1：副标题完美两行居中 ================= */
+  /* ================= 修复1：副标题彻底抛弃电脑端横线 ================= */
   .portrait-wrap p {
     display: flex !important;
-    flex-direction: column !important; /* 变成上下排列 */
+    flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
     width: 100% !important;
-    margin-top: 15px !important;
-    line-height: 1.5 !important;
-    font-size: 0.95rem !important;
+    margin-top: 20px !important;
+    padding-left: 0 !important; /* 干掉电脑端的左内边距 */
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
   }
   
-  .portrait-wrap p > span:first-child {
-    font-size: 1.2rem !important;
-    font-weight: 600 !important;
-    color: var(--primary, #4785b8) !important;
-    margin-bottom: 4px !important;
-  }
-
-  /* 手机端隐藏圆点 */
-  .portrait-wrap p .mid-dot {
+  /* 干掉电脑端那条霸道的横线 */
+  .portrait-wrap > p::before {
     display: none !important; 
   }
 
-  /* 手机端让换行符生效 */
-  .mobile-br {
-    display: block !important;
+  .portrait-wrap p > span:first-child {
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    color: var(--blue-deep) !important;
+    margin-bottom: 5px !important;
+  }
+
+  /* 隐藏圆点和换行符，纯靠 flex 布局控制 */
+  .portrait-wrap p .mid-dot,
+  .portrait-wrap p .mobile-br {
+    display: none !important; 
   }
 
   .portrait-wrap p .sub-chapter {
     display: block !important;
     width: 100% !important; 
     text-align: center !important;
+    font-weight: normal !important;
+    color: var(--ink-soft) !important;
+  }
+
+  /* 在手机端，让普通文本变成块级，独占一行（替代 <br>） */
+  .portrait-wrap p {
+    gap: 4px !important;
   }
 
   /* ================= 修复2：首屏超大字 ================= */
@@ -246,7 +255,7 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
   .hero-tagline {
     font-size: 1.1rem !important;
     margin-top: 10px !important;
-    font-weight: normal;
+    font-weight: normal !important;
   }
 
   /* ================= 修复3：技能云彻底居中 ================= */
@@ -255,21 +264,19 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
     flex-direction: column !important; 
     align-items: center !important;
     justify-content: center !important;
-    gap: 15px !important; 
+    gap: 12px !important; 
     height: auto !important; 
     min-height: 300px !important; 
     padding: 40px 0 !important;
     width: 100% !important;
     position: relative !important; 
-    left: auto !important;
-    top: auto !important;
     transform: none !important;
     scale: 1 !important; 
-    overflow: visible !important;
+    background: transparent !important; /* 去掉电脑端的径向渐变背景，防止看着像圆圈 */
   }
 
-  /* 针对所有的小标签 */
-  .skill-cloud > span {
+  /* 针对所有的小标签 (CET-6, Python等) 暴力重置 */
+  .skill-cloud span {
     position: static !important; 
     transform: none !important; 
     left: auto !important; right: auto !important; top: auto !important; bottom: auto !important;
@@ -277,28 +284,26 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
     width: 85% !important; 
     max-width: 320px !important;
     font-size: 1rem !important;
-    display: block !important;
+    display: flex !important;
+    justify-content: center !important;
   }
 
-  /* 针对蓝色大按钮，强制居中 */
-  .skill-cloud > button.skill-main, 
-  .skill-main.certificate-trigger {
+  /* 针对蓝色大按钮，强制占据父容器并居中 */
+  .skill-cloud .skill-main {
     position: static !important; 
     transform: none !important; 
     left: auto !important; right: auto !important; top: auto !important; bottom: auto !important;
-    margin: 10px auto !important; 
+    margin: 15px auto !important; 
     width: 85% !important; 
     max-width: 320px !important;
     height: auto !important;
-    min-height: 80px !important;
-    padding: 15px 20px !important;
+    padding: 20px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    justify-content: center !important;
     text-align: center !important;
     white-space: normal !important; 
-    box-sizing: border-box !important; 
+    background: var(--blue-deep) !important; /* 确保背景是蓝色的 */
   }
 
   .skill-main .view-hint {
