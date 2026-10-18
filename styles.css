@@ -162,12 +162,21 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
 
 .reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s ease, transform .8s ease; }
 .reveal.is-visible { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .wind, .scroll-cue span { animation: none; } .reveal { opacity: 1; transform: none; transition: none; } }
+/* 1. 电脑端：隐藏手机专用的换行符，保持一整行 */
+.mobile-br {
+  display: none !important;
+}
+
+/* 2. 电脑端的减少动画偏好（你原本就有的，保留） */
+@media (prefers-reduced-motion: reduce) { 
+  html { scroll-behavior: auto; } 
+  .wind, .scroll-cue span { animation: none; } 
+  .reveal { opacity: 1; transform: none; transition: none; } 
+}
 
 /* ========================================================= */
-/* 手机端专项适配（最终完美版） */
+/* 3. 手机端专项适配（最终完美版） */
 /* ========================================================= */
-
 @media (max-width: 820px) {
   /* 基础排版 */
   .section-shell { width: min(100% - 34px, 680px) !important; }
@@ -185,29 +194,42 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
   .hero-actions { justify-content: center; flex-wrap: wrap; gap: 15px; }
   .scroll-cue { display: none; }
 
-  /* 修复1：副标题完美两行居中 */
+  /* ================= 修复1：副标题完美两行居中 ================= */
   .portrait-wrap p {
+    display: flex !important;
+    flex-direction: column !important; /* 变成上下排列 */
+    align-items: center !important;
     text-align: center !important;
     width: 100% !important;
     margin-top: 15px !important;
     line-height: 1.5 !important;
-    font-size: 1rem !important;
+    font-size: 0.95rem !important;
   }
+  
   .portrait-wrap p > span:first-child {
     font-size: 1.2rem !important;
     font-weight: 600 !important;
     color: var(--primary, #4785b8) !important;
-    margin-right: 5px;
-  }
-  .portrait-wrap p .mid-dot {
-    display: none !important; /* 手机端隐藏圆点 */
-  }
-  .portrait-wrap p .sub-chapter {
-    display: inline-block !important;
-    font-weight: normal !important;
+    margin-bottom: 4px !important;
   }
 
-  /* 修复2：首屏超大字 */
+  /* 手机端隐藏圆点 */
+  .portrait-wrap p .mid-dot {
+    display: none !important; 
+  }
+
+  /* 手机端让换行符生效 */
+  .mobile-br {
+    display: block !important;
+  }
+
+  .portrait-wrap p .sub-chapter {
+    display: block !important;
+    width: 100% !important; 
+    text-align: center !important;
+  }
+
+  /* ================= 修复2：首屏超大字 ================= */
   h1 { 
     font-size: clamp(2.2rem, 8vw, 3rem) !important; 
     line-height: 1.2 !important;
@@ -227,7 +249,7 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
     font-weight: normal;
   }
 
-  /* 修复3：技能云 (针对你的 HTML 结构暴力修复) */
+  /* ================= 修复3：技能云彻底居中 ================= */
   .skill-cloud {
     display: flex !important;
     flex-direction: column !important; 
@@ -235,41 +257,50 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
     justify-content: center !important;
     gap: 15px !important; 
     height: auto !important; 
-    min-height: auto !important; 
-    padding: 30px 10px !important;
+    min-height: 300px !important; 
+    padding: 40px 0 !important;
     width: 100% !important;
-    overflow: visible !important;
+    position: relative !important; 
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
     scale: 1 !important; 
+    overflow: visible !important;
   }
 
-  /* 强制所有 span 和 button 取消绝对定位 */
-  .skill-cloud > span,
-  .skill-cloud > button {
+  /* 针对所有的小标签 */
+  .skill-cloud > span {
     position: static !important; 
     transform: none !important; 
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
+    left: auto !important; right: auto !important; top: auto !important; bottom: auto !important;
     margin: 0 auto !important;
     width: 85% !important; 
     max-width: 320px !important;
     font-size: 1rem !important;
+    display: block !important;
   }
 
-  /* 专门修复蓝色大按钮 */
+  /* 针对蓝色大按钮，强制居中 */
+  .skill-cloud > button.skill-main, 
   .skill-main.certificate-trigger {
-    padding: 18px 20px !important;
-    border-radius: 20px !important;
+    position: static !important; 
+    transform: none !important; 
+    left: auto !important; right: auto !important; top: auto !important; bottom: auto !important;
+    margin: 10px auto !important; 
+    width: 85% !important; 
+    max-width: 320px !important;
     height: auto !important;
     min-height: 80px !important;
+    padding: 15px 20px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
     text-align: center !important;
     white-space: normal !important; 
+    box-sizing: border-box !important; 
   }
+
   .skill-main .view-hint {
     font-size: 0.85rem !important;
     margin-top: 5px !important;
