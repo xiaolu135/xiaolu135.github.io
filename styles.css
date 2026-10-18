@@ -162,21 +162,12 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
 
 .reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s ease, transform .8s ease; }
 .reveal.is-visible { opacity: 1; transform: none; }
-/* 1. 电脑端：隐藏手机专用的换行符，保持一整行 */
-.mobile-br {
-  display: none !important;
-}
-
-/* 2. 电脑端的减少动画偏好 */
-@media (prefers-reduced-motion: reduce) { 
-  html { scroll-behavior: auto; } 
-  .wind, .scroll-cue span { animation: none; } 
-  .reveal { opacity: 1; transform: none; transition: none; } 
-}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .wind, .scroll-cue span { animation: none; } .reveal { opacity: 1; transform: none; transition: none; } }
 
 /* ========================================================= */
-/* 3. 手机端专项适配（终极无死角覆盖版） */
+/* 手机端专项适配（终极版） */
 /* ========================================================= */
+
 @media (max-width: 820px) {
   /* 基础排版 */
   .section-shell { width: min(100% - 34px, 680px) !important; }
@@ -194,35 +185,27 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
   .hero-actions { justify-content: center; flex-wrap: wrap; gap: 15px; }
   .scroll-cue { display: none; }
 
-  /* 修复1：副标题 */
+  /* 修复图1：副标题 "2026 Shenzhen..." 另起一行居中 */
   .portrait-wrap p {
     display: flex !important;
-    flex-direction: column !important;
+    flex-wrap: wrap !important; /* 允许换行 */
+    justify-content: center !important;
     align-items: center !important;
     text-align: center !important;
     width: 100% !important;
-    margin-top: 20px !important;
-    padding-left: 0 !important;
-    font-size: 1rem !important;
-    line-height: 1.6 !important;
+    margin-top: 15px !important;
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
   }
-  .portrait-wrap > p::before { display: none !important; }
-  .portrait-wrap p > span:first-child {
-    font-size: 1.2rem !important;
-    font-weight: 700 !important;
-    color: var(--blue-deep) !important;
+  /* 强制 span (2026) 占满第一行并居中，下面的纯文本自然换行居中 */
+  .portrait-wrap p span {
+    width: 100% !important;
     margin-bottom: 5px !important;
-  }
-  .portrait-wrap p .mid-dot, .portrait-wrap p .mobile-br { display: none !important; }
-  .portrait-wrap p .sub-chapter {
-    display: block !important;
-    width: 100% !important; 
-    text-align: center !important;
-    font-weight: normal !important;
-    color: var(--ink-soft) !important;
+    font-size: 1.2rem !important;
+    color: var(--primary) !important; /* 假设原代码用了 primary 颜色 */
   }
 
-  /* 修复2：首屏超大字 */
+  /* 修复图2：首屏超大字和多行文字 */
   h1 { 
     font-size: clamp(2.2rem, 8vw, 3rem) !important; 
     line-height: 1.2 !important;
@@ -232,76 +215,48 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
     gap: 10px;
     word-break: keep-all !important;
   }
-  .chinese-name { font-size: 1.5rem !important; margin-top: 5px !important; }
-  .hero-tagline { font-size: 1.1rem !important; margin-top: 10px !important; font-weight: normal !important; }
-
-  /* ================= 终极暴力重写：技能云 ================= */
-  
-  /* 1. 把外层容器变成普通排队 */
-  .honor-layout { display: block !important; } /* 取消双列 */
-  
-  .skill-cloud {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 12px !important;
-    width: 100% !important;
-    min-height: 300px !important;
-    height: auto !important;
-    padding: 30px 0 !important;
-    margin: 0 auto !important;
-    background: transparent !important;
-    position: relative !important;
-    /* 防止被溢出内容撑大 */
-    overflow: hidden !important; 
-  }
-
-  /* 2. 把里面所有的东西（标签和按钮）全部变成普通块，取消一切绝对定位 */
-  .skill-cloud > span,
-  .skill-cloud > button.skill-main {
-    position: relative !important; 
-    left: 0 !important;
-    top: 0 !important;
-    transform: none !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 85% !important;
-    max-width: 320px !important;
-    margin: 0 auto !important; /* 强制居中 */
-    padding: 10px 20px !important;
-    border-radius: 999px !important;
-    box-sizing: border-box !important;
-    /* 最关键的一句：允许换行，防止被长文本撑宽 */
-    white-space: normal !important; 
-    word-wrap: break-word !important;
-  }
-
-  /* 3. 专门针对蓝色按钮的样式 */
-  .skill-cloud > button.skill-main {
-    padding: 20px !important;
-    margin: 15px auto !important; /* 上下多留点空间 */
-    border-radius: 20px !important; /* 大按钮用圆角矩形更好看 */
-    background: var(--blue-deep) !important;
-  }
-
-  .skill-main .view-hint {
-    font-size: 0.8rem !important;
+  .chinese-name {
+    font-size: 1.5rem !important; /* 中文缩小 */
     margin-top: 5px !important;
-    color: rgba(255,255,255,0.7) !important;
+  }
+  .hero-tagline {
+    font-size: 1.1rem !important; /* 英文标语缩小 */
+    margin-top: 10px !important;
+    font-weight: normal;
+  }
+
+  /* 修复图3：技能云重叠、溢出 */
+  .skill-cloud, .skills-container { 
+    display: flex !important;
+    flex-direction: column !important; 
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 15px !important; 
+    height: auto !important; 
+    min-height: auto !important; 
+    scale: 1 !important; 
+    padding: 20px 0 !important;
+    width: 100% !important;
+    overflow: visible !important;
+  }
+  .skill-cloud > *, .skill-tag, .center-badge, .main-badge {
+    position: static !important; 
+    transform: none !important;  
+    margin: 0 auto !important;
+    width: 85% !important; 
+    max-width: 320px !important;
   }
 
   /* 其他通用区块 */
   .section-block { padding-block: 60px; }
   .section-heading { grid-template-columns: 1fr; gap: 4px; margin-bottom: 34px; }
-  .about-layout, .project-grid, .interest-layout { grid-template-columns: 1fr !important; }
+  .about-layout, .project-grid, .honor-layout, .interest-layout { grid-template-columns: 1fr !important; }
   .project-card.feature { transform: none; }
   .timeline::before { left: 6px; }
   .timeline-item { grid-template-columns: 1fr; gap: 12px; padding-left: 34px; }
   .timeline-item::before { left: 0; top: 15px; }
   .time { padding-top: 0; }
+  .honor-layout, .interest-layout { gap: 40px; }
   .interest-visual { min-height: 400px; }
   .footer-inner { grid-template-columns: 1fr; gap: 25px; align-items: start; }
   footer small { width: 100%; flex-wrap: wrap; }
