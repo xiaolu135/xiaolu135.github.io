@@ -165,7 +165,7 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .wind, .scroll-cue span { animation: none; } .reveal { opacity: 1; transform: none; transition: none; } }
 
 /* ========================================================= */
-/* 手机端专项适配（终极版） */
+/* 手机端专项适配（最终完美版） */
 /* ========================================================= */
 
 @media (max-width: 820px) {
@@ -185,27 +185,29 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
   .hero-actions { justify-content: center; flex-wrap: wrap; gap: 15px; }
   .scroll-cue { display: none; }
 
-  /* 修复图1：副标题 "2026 Shenzhen..." 另起一行居中 */
+  /* 修复1：副标题完美两行居中 */
   .portrait-wrap p {
-    display: flex !important;
-    flex-wrap: wrap !important; /* 允许换行 */
-    justify-content: center !important;
-    align-items: center !important;
     text-align: center !important;
     width: 100% !important;
     margin-top: 15px !important;
-    font-size: 0.95rem !important;
-    line-height: 1.4 !important;
+    line-height: 1.5 !important;
+    font-size: 1rem !important;
   }
-  /* 强制 span (2026) 占满第一行并居中，下面的纯文本自然换行居中 */
-  .portrait-wrap p span {
-    width: 100% !important;
-    margin-bottom: 5px !important;
+  .portrait-wrap p > span:first-child {
     font-size: 1.2rem !important;
-    color: var(--primary) !important; /* 假设原代码用了 primary 颜色 */
+    font-weight: 600 !important;
+    color: var(--primary, #4785b8) !important;
+    margin-right: 5px;
+  }
+  .portrait-wrap p .mid-dot {
+    display: none !important; /* 手机端隐藏圆点 */
+  }
+  .portrait-wrap p .sub-chapter {
+    display: inline-block !important;
+    font-weight: normal !important;
   }
 
-  /* 修复图2：首屏超大字和多行文字 */
+  /* 修复2：首屏超大字 */
   h1 { 
     font-size: clamp(2.2rem, 8vw, 3rem) !important; 
     line-height: 1.2 !important;
@@ -216,17 +218,17 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
     word-break: keep-all !important;
   }
   .chinese-name {
-    font-size: 1.5rem !important; /* 中文缩小 */
+    font-size: 1.5rem !important;
     margin-top: 5px !important;
   }
   .hero-tagline {
-    font-size: 1.1rem !important; /* 英文标语缩小 */
+    font-size: 1.1rem !important;
     margin-top: 10px !important;
     font-weight: normal;
   }
 
-  /* 修复图3：技能云重叠、溢出 */
-  .skill-cloud, .skills-container { 
+  /* 修复3：技能云 (针对你的 HTML 结构暴力修复) */
+  .skill-cloud {
     display: flex !important;
     flex-direction: column !important; 
     align-items: center !important;
@@ -234,17 +236,44 @@ footer small { grid-column: 1/-1; display: flex; justify-content: space-between;
     gap: 15px !important; 
     height: auto !important; 
     min-height: auto !important; 
-    scale: 1 !important; 
-    padding: 20px 0 !important;
+    padding: 30px 10px !important;
     width: 100% !important;
     overflow: visible !important;
+    scale: 1 !important; 
   }
-  .skill-cloud > *, .skill-tag, .center-badge, .main-badge {
+
+  /* 强制所有 span 和 button 取消绝对定位 */
+  .skill-cloud > span,
+  .skill-cloud > button {
     position: static !important; 
-    transform: none !important;  
+    transform: none !important; 
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
     margin: 0 auto !important;
     width: 85% !important; 
     max-width: 320px !important;
+    font-size: 1rem !important;
+  }
+
+  /* 专门修复蓝色大按钮 */
+  .skill-main.certificate-trigger {
+    padding: 18px 20px !important;
+    border-radius: 20px !important;
+    height: auto !important;
+    min-height: 80px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: normal !important; 
+  }
+  .skill-main .view-hint {
+    font-size: 0.85rem !important;
+    margin-top: 5px !important;
+    display: block !important;
   }
 
   /* 其他通用区块 */
